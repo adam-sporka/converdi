@@ -1,0 +1,209 @@
+﻿
+{
+	Initialize "(){ AddToPluginsMenu('Gather Data for Converdi','Run');
+
+	// The following enables the latest behavior for the ManuScript interpreter.
+	// If you intend your plugin to run on previous versions of Sibelius where that functionality
+	// didn't exist, you will likely have to revisit the following:
+	if (Sibelius.ProgramVersion > 20200600) {
+		SetInterpreterOption(TreatSingleCharacterAsString);
+		SetInterpreterOption(SupportHalfSemitonePitchValues);
+	}
+} "
+	DoStaff "(staff_number, first_bar_number, last_bar_number, file_name) {
+
+
+	this_score = Sibelius.ActiveScore;
+	if (staff_number = -1)
+	{
+		staff = this_score.SystemStaff;
+		instrument_name = 'BEGIN STAFF SYSTEM';
+	}
+	else
+	{
+		staff = this_score.NthStaff(staff_number);
+		num_same = staff.NumStavesInSameInstrument;
+		instrument_name = 'BEGIN STAFF COMPOUND ' & num_same & ' NAME ' & EscapeString(staff.FullInstrumentName);
+	}
+
+	objects_to_copy = CreateDictionary();
+
+	s = instrument_name & ';\n';
+	for each Bar bar in staff
+	{
+		if ((bar.BarNumber >= first_bar_number) and(bar.BarNumber <= last_bar_number))
+		{
+			d = CreateSparseArray();
+			d[1] = 0;
+			d[2] = 0;
+			d[4] = 0;
+			d[8] = 0;
+
+			sg = bar.GetKeySignatureAt(0);
+			s = s & '  BEGIN BAR ' & bar.BarNumber & ' DUR ' & bar.Length & ' SHARPS ' & sg.Sharps & ';\n';
+			for each obj in bar
+			{
+				s = s & '    OBJ ';
+				s = s & obj.Type & ' ';
+				s = s & 'VOX ' & obj.Voices;
+
+				first_vox = utils.GetBits(obj.Voices);
+
+				type = obj.Type;
+				if (type = 'NoteRest')
+				{
+					s = s & ' POS ' & d[first_vox[0]];
+
+					scale = 1;
+					tuplet = obj.ParentTupletIfAny;
+					if (not(tuplet = null))
+					{
+						left = tuplet.Left;
+						right = tuplet.Right;
+						scale = (right * 1.0) / (left * 1.0);
+						unit = tuplet.Unit;
+						pdur = tuplet.PlayedDuration;
+						pos = obj.PositionInTuplet;
+						// Details of the tuplet
+						// s = s & ' (' & pos & '_in_' & left & ':' & right & '_of_' & unit & '_pdur_' & pdur & ')';
+					}
+
+					s = s & ' DUR ' & (obj.Duration * scale);
+
+					if (obj.GetArticulation(1)) { s = s & ' A10N STACCATO'; }
+					if (obj.GetArticulation(4)) { s = s & ' A10N TENUTO'; }
+					if (obj.GetArticulation(5)) { s = s & ' A10N ACCENT'; }
+					if (obj.GetArticulation(6)) { s = s & ' A10N MARCATO'; }
+
+					if (obj.SingleTremolos != 0) { s = s & ' TREMOLO ' & obj.SingleTremolos; }
+		
+					if ((obj.ArpeggioType = ArpeggioTypeNormal) or (obj.ArpeggioType = ArpeggioTypeUp)) { s = s & ' ARP UP'; }
+					if (obj.ArpeggioType = ArpeggioTypeDown) { s = s & ' ARP DOWN'; }
+
+					s = s & ' NOTES ' & obj.NoteCount;
+					notes = obj.NoteCount;
+					for each note in obj
+					{
+						name = note.Name;
+						pitch = note.Pitch;
+						wname = note.WrittenName;
+						wpitch = note.WrittenPitch;
+
+						tied = note.Tied;
+						// tied_into = note.TiedInto;
+						tied_into = False; // TiedInto for now ignored by converdi.exe
+						style = note.NoteStyle;
+
+						s = s & ' <';
+						if (tied_into) {
+							s = s & 'TIED_INTO,';
+						}
+						s = s & name & ',' & pitch & ',' & wname & ',' & wpitch & ',' & style;
+						if (tied) {
+							s = s & ',TIED';
+						}
+						s = s & '>';
+					}
+
+					d[first_vox[0]] = d[first_vox[0]] + (scale * obj.Duration);
+				}
+				if ((type = 'CrescendoLine') or (type = 'DiminuendoLine') or (type = 'Slur') or (type = 'Trill') or (type = 'PedalLine') or (type = 'RitardLine'))
+				{
+					s = s & ' POS ' & obj.Position;
+					s = s & ' DUR ' & obj.Duration;
+					s = s & ' STYLE ' & EscapeString(obj.StyleAsText);
+				}
+				if ((type = 'Text') or (type = 'SystemTextItem'))
+				{
+					s = s & ' POS ' & obj.Position;
+					s = s & ' STYLE ' & EscapeString(obj.StyleAsText);
+					s = s & ' TXT ' & EscapeString(obj.Text);
+				}
+				if ((type = 'SymbolItem') or (type = 'SystemSymbolItem'))
+				{
+					s = s & ' POS ' & obj.Position;
+					s = s & ' IDX ' & obj.Index;
+					s = s & ' NAME ' & EscapeString(obj.Name);
+				}
+				if (type = 'TimeSignature')
+				{
+					s = s & ' RATIO ' & obj.Numerator & '/' & obj.Denominator;
+				}
+				s = s & ';\n';
+			}
+			s = s & '  END BAR;\n';
+		}
+	}
+
+	s = s & 'END STAFF;\n\n';
+
+	success = Sibelius.AppendTextFile(file_name, s, False);
+
+}"
+	Run "() {
+
+	this_score = Sibelius.ActiveScore;
+	selection = this_score.Selection;
+
+	if (selection.IsPassage = False) {
+		Sibelius.MessageBox('Please select some music first.');
+		return 0;
+	}
+
+	first_bar_number = selection.FirstBarNumber;
+	last_bar_number = selection.LastBarNumber;
+	top_staff = selection.TopStaff;
+	bottom_staff = selection.BottomStaff;
+
+	new_file_name = this_score.FileName & '-dump.txt';
+	Sibelius.CreateTextFile(new_file_name);
+
+	DoStaff(-1, first_bar_number, last_bar_number, new_file_name);
+	for a = top_staff to bottom_staff + 1
+	{
+		DoStaff(a, first_bar_number, last_bar_number, new_file_name);
+	}
+}"
+	EscapeString "(input) {
+
+l = Length(input);
+
+if (l = 0)
+{
+	return '\'\'';
+}
+
+add_quotes = 0;
+output = '';
+
+for i = 0 to Length(input)
+{
+	c = CharAt(input, i);
+	if (Asc(c) = 32) {
+		add_quotes = 1;
+		output = output & c;
+	}
+	else {
+		if (Asc(c) = 34) {
+			output = output & '_';
+		}
+		else {
+			if (Asc(c) = 39) {
+				output = output & '_';
+			}
+			else {
+				if (Asc(c) < 127) {
+					output = output & c;
+				}
+			}
+		}
+	}
+}
+
+if (add_quotes = 1)
+{
+	output = '\'' & output & '\'';
+}
+
+return output;}"
+}

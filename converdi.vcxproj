@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- ================================================================
+       converdi.vcxproj  –  Visual Studio 2022 (v143 toolset)
+       Target:  x64 Console Application
+       Dependency: jdksmidi  (include path configurable below)
+       ================================================================ -->
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>converdi</RootNamespace>
+    <ProjectName>converdi</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <!-- ── Debug ─────────────────────────────────────────────────────── -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <!-- ── Release ───────────────────────────────────────────────────── -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <!-- ── Per-config property sheets ──────────────────────────────── -->
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <!-- ── Output / intermediate directories ──────────────────────── -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\</IntDir>
+    <TargetName>converdi</TargetName>
+    <IncludePath>$(SolutionDir)\3rd-party\midifile\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\obj\</IntDir>
+    <TargetName>converdi</TargetName>
+    <IncludePath>$(SolutionDir)\3rd-party\midifile\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <!-- ================================================================
+       COMPILER / LINKER settings
+       midifile include path:
+         • Copy the contents of midifile/include/ and midifile/src/ into
+           third_party/midifile/ (or clone the repo there).
+         • The project already adds $(SolutionDir)third_party to the
+           include search path, so #include "MidiFile.h" will resolve.
+         • Add the midifile .cpp files to the project, or compile them
+           into a static lib and reference it below.
+       ================================================================ -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <!-- ↓ Add the folder that contains the jdksmidi/ directory here -->
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)third_party;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <!-- If jdksmidi is built as a static lib, add it here, e.g.:
+           <AdditionalDependencies>jdksmidi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+           <AdditionalLibraryDirectories>$(SolutionDir)third_party\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      -->
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)third_party;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <!-- <AdditionalDependencies>jdksmidi.lib;%(AdditionalDependencies)</AdditionalDependencies> -->
+    </Link>
+  </ItemDefinitionGroup>
+  <!-- ================================================================
+       Source files
+       ================================================================ -->
+  <ItemGroup>
+    <ClCompile Include="3rd-party\midifile\src\Binasc.cpp" />
+    <ClCompile Include="3rd-party\midifile\src\MidiEvent.cpp" />
+    <ClCompile Include="3rd-party\midifile\src\MidiEventList.cpp" />
+    <ClCompile Include="3rd-party\midifile\src\MidiFile.cpp" />
+    <ClCompile Include="3rd-party\midifile\src\MidiMessage.cpp" />
+    <ClCompile Include="src\configuration.cpp" />
+    <ClCompile Include="src\converdi.cpp" />
+    <ClCompile Include="src\job.cpp" />
+    <ClCompile Include="src\job_database.cpp" />
+    <ClCompile Include="src\measure.cpp" />
+    <ClCompile Include="src\music_model.cpp" />
+    <ClCompile Include="src\notation_object.cpp" />
+    <ClCompile Include="src\parser.cpp" />
+    <ClCompile Include="src\scope.cpp" />
+    <ClCompile Include="src\staff.cpp" />
+    <ClCompile Include="src\staff_owner.cpp" />
+    <ClCompile Include="src\task.cpp" />
+    <ClCompile Include="src\tests.cpp" />
+  </ItemGroup>
+  <!-- ================================================================
+       Header files
+       ================================================================ -->
+  <ItemGroup>
+    <ClInclude Include="src\configuration.h" />
+    <ClInclude Include="src\converdi.h" />
+    <ClInclude Include="src\job.h" />
+    <ClInclude Include="src\lexical_analyzer.h" />
+    <ClInclude Include="src\measure.h" />
+    <ClInclude Include="src\music_model.h" />
+    <ClInclude Include="src\notation_object.h" />
+    <ClInclude Include="src\parser.h" />
+    <ClInclude Include="src\scope.h" />
+    <ClInclude Include="src\simple_types.h" />
+    <ClInclude Include="src\staff.h" />
+    <ClInclude Include="src\staff_owner.h" />
+    <ClInclude Include="src\tokenizer.h" />
+  </ItemGroup>
+  <!-- ================================================================
+       Data / preset files (shown in Solution Explorer, not compiled)
+       ================================================================ -->
+  <ItemGroup>
+    <None Include="data\presets\default.ini" />
+    <None Include="data\presets\Barbora\tables.ini" />
+    <None Include="data\presets\Barbora\percussion\high_drums.ini" />
+    <None Include="data\presets\Barbora\percussion\low_drums.ini" />
+    <None Include="data\presets\Barbora\percussion\tambourine.ini" />
+    <None Include="data\presets\Barbora\percussion\timpani.ini" />
+    <None Include="data\presets\Barbora\percussion\triangolo.ini" />
+    <None Include="data\presets\Barbora\strings\chitarra.ini" />
+    <None Include="data\presets\Barbora\strings\cimbalom.ini" />
+    <None Include="data\presets\Barbora\strings\liuto.ini" />
+    <None Include="data\presets\Barbora\vox\default.ini" />
+    <None Include="data\presets\Barbora\winds\flauto_a_becco_s.ini" />
+    <None Include="data\presets\Barbora\winds\flauto_a_becco_t.ini" />
+    <None Include="data\presets\Barbora\winds\shawm.ini" />
+    <None Include="data\presets\CineSamples\tables.ini" />
+    <None Include="data\presets\CineSamples\percussion\timpani.ini" />
+    <None Include="data\presets\CineSamples\strings\strings.ini" />
+    <None Include="data\presets\CineSamples\strings\violin.ini" />
+    <None Include="data\presets\ERA2\winds\shawm.ini" />
+    <None Include="data\presets\Test\tables.ini" />
+    <None Include="data\presets\Test\articulation\arpeggio.ini" />
+    <None Include="data\presets\Test\latch\anticipation.ini" />
+    <None Include="data\presets\Test\latch\no_anticipation.ini" />
+    <None Include="data\presets\Test\shortening\all.ini" />
+    <None Include="data\presets\Test\shortening\all_percent.ini" />
+    <None Include="data\presets\Test\shortening\last.ini" />
+    <None Include="data\presets\Test\shortening\last_percent.ini" />
+    <None Include="data\presets\Test\shortening\prolong.ini" />
+    <None Include="data\presets\Test\strings\harp.ini" />
+    <None Include="data\presets\Test\strings\piano.ini" />
+    <None Include="data\presets\Test\strings\strings.ini" />
+    <None Include="data\presets\Test\strings\violin.ini" />
+    <None Include="data\presets\Test\winds\flute.ini" />
+    <None Include="data\profiles\barbora-adam.ini" />
+    <None Include="data\profiles\barbora.ini" />
+    <None Include="data\profiles\test.ini" />
+  </ItemGroup>
+  <!-- ================================================================
+       Sibelius plugin (source macro — not compiled)
+       ================================================================ -->
+  <ItemGroup>
+    <None Include="Converdi.plg" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

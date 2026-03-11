@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Filter definitions -->
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx</Extensions>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Presets">
+      <UniqueIdentifier>{B94F3C4E-1234-4A0B-9A5E-000000000001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Presets\Barbora">
+      <UniqueIdentifier>{B94F3C4E-1234-4A0B-9A5E-000000000002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Presets\CineSamples">
+      <UniqueIdentifier>{B94F3C4E-1234-4A0B-9A5E-000000000003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Presets\ERA2">
+      <UniqueIdentifier>{B94F3C4E-1234-4A0B-9A5E-000000000004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Presets\Test">
+      <UniqueIdentifier>{B94F3C4E-1234-4A0B-9A5E-000000000005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Profiles">
+      <UniqueIdentifier>{B94F3C4E-1234-4A0B-9A5E-000000000006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Macro">
+      <UniqueIdentifier>{B94F3C4E-1234-4A0B-9A5E-000000000007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MidiFile">
+      <UniqueIdentifier>{252aee33-bc2b-4407-97c3-de6c0db571d2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <!-- Source files -->
+  <ItemGroup>
+    <ClCompile Include="src\configuration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\converdi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\job.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\job_database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\measure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\music_model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\notation_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scope.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\staff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\staff_owner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd-party\midifile\src\Binasc.cpp">
+      <Filter>MidiFile</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd-party\midifile\src\MidiEvent.cpp">
+      <Filter>MidiFile</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd-party\midifile\src\MidiEventList.cpp">
+      <Filter>MidiFile</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd-party\midifile\src\MidiFile.cpp">
+      <Filter>MidiFile</Filter>
+    </ClCompile>
+    <ClCompile Include="3rd-party\midifile\src\MidiMessage.cpp">
+      <Filter>MidiFile</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <!-- Header files -->
+  <ItemGroup>
+    <ClInclude Include="src\configuration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\converdi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\job.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lexical_analyzer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\measure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\music_model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\notation_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\simple_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\staff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\staff_owner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tokenizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <!-- Data / preset files -->
+  <ItemGroup>
+    <None Include="data\presets\default.ini">
+      <Filter>Data\Presets</Filter>
+    </None>
+    <None Include="data\presets\Barbora\tables.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\percussion\high_drums.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\percussion\low_drums.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\percussion\tambourine.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\percussion\timpani.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\percussion\triangolo.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\strings\chitarra.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\strings\cimbalom.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\strings\liuto.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\vox\default.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\winds\flauto_a_becco_s.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\winds\flauto_a_becco_t.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\Barbora\winds\shawm.ini">
+      <Filter>Data\Presets\Barbora</Filter>
+    </None>
+    <None Include="data\presets\CineSamples\tables.ini">
+      <Filter>Data\Presets\CineSamples</Filter>
+    </None>
+    <None Include="data\presets\CineSamples\percussion\timpani.ini">
+      <Filter>Data\Presets\CineSamples</Filter>
+    </None>
+    <None Include="data\presets\CineSamples\strings\strings.ini">
+      <Filter>Data\Presets\CineSamples</Filter>
+    </None>
+    <None Include="data\presets\CineSamples\strings\violin.ini">
+      <Filter>Data\Presets\CineSamples</Filter>
+    </None>
+    <None Include="data\presets\ERA2\winds\shawm.ini">
+      <Filter>Data\Presets\ERA2</Filter>
+    </None>
+    <None Include="data\presets\Test\tables.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\articulation\arpeggio.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\latch\anticipation.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\latch\no_anticipation.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\shortening\all.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\shortening\all_percent.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\shortening\last.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\shortening\last_percent.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\shortening\prolong.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\strings\harp.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\strings\piano.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\strings\strings.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\strings\violin.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\presets\Test\winds\flute.ini">
+      <Filter>Data\Presets\Test</Filter>
+    </None>
+    <None Include="data\profiles\barbora-adam.ini">
+      <Filter>Data\Profiles</Filter>
+    </None>
+    <None Include="data\profiles\barbora.ini">
+      <Filter>Data\Profiles</Filter>
+    </None>
+    <None Include="data\profiles\test.ini">
+      <Filter>Data\Profiles</Filter>
+    </None>
+  </ItemGroup>
+  <!-- Sibelius macro -->
+  <ItemGroup>
+    <None Include="Converdi.plg">
+      <Filter>Macro</Filter>
+    </None>
+  </ItemGroup>
+</Project>
