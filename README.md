@@ -75,9 +75,9 @@ converdi/
 └── data/
     ├── profiles/         # Score-level configuration (.ini)
     └── presets/          # Per-library instrument presets (.ini)
-        ├── Barbora/
         ├── CineSamples/
         ├── ERA2/
+        ├── Game/         # Presets by Jan Valta we used for Kingdom Come: Deliverance II
         └── Test/
 ```
 
