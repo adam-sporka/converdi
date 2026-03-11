@@ -1,7 +1,8 @@
 #include "converdi.h"
 
-#include <vector>
 #include <algorithm>
+#include <set>
+#include <vector>
 
 namespace converdi
 {
@@ -532,7 +533,7 @@ void CSibeliusDataParser::parseObject(CMeasure* pTheMeasure, std::vector<NOTATIO
 	int tremolo = 0;
 	int arpeggio = 0;
 	std::string style = "";
-	std::string articulation = "";
+	std::set<std::string> articulations;
 	std::string txt = "";
 	std::string symbol_name = "";
 	std::string ratio = "";
@@ -591,7 +592,7 @@ void CSibeliusDataParser::parseObject(CMeasure* pTheMeasure, std::vector<NOTATIO
 		else if (tokenizer.compare("A10N"))
 		{
 			tokenizer.advance();
-			articulation = tokenizer.text();
+			articulations.insert(tokenizer.text());
 			tokenizer.advance();
 		}
 
@@ -646,7 +647,7 @@ void CSibeliusDataParser::parseObject(CMeasure* pTheMeasure, std::vector<NOTATIO
 				{
 					NOTATION_OBJECT *object = new NOTATION_OBJECT(pTheMeasure, NOTATION_OBJECT::EType::Note, NOTATION_OBJECT::ESubtype::Subtype_undef, { pTheMeasure->m_nNumber, pos }, vox_flags);
 					object->m_nDuration = dur;
-					if (articulation.compare("STACCATO") == 0) object->m_bArticulationStaccato = true;
+					if (articulations.count("STACCATO")) object->m_bArticulationStaccato = true;
 					object->m_nTremolo = tremolo;
 					object->m_nArpeggio = arpeggio;
 					decodeNoteData(n, object);
