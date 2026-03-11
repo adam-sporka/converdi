@@ -1,4 +1,6 @@
-# Converdi
+<p align="center">
+  <img src="converdi.png" alt="Converdi">
+</p>
 
 **Converdi** is an open-source tool for composers who write music in **Sibelius** and perform it with **sample libraries** in a DAW. It converts a Sibelius score into a DAW-ready MIDI file that accounts for articulations, dynamics, playing techniques, and sample library routing — things Sibelius's built-in MIDI export silently discards.
 
