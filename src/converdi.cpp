@@ -4,10 +4,9 @@
 #include "converdi.h"
 
 ////////////////////////////////////////////////////////////////
-char* read_file(const char *path)
+char *read_file(const char *path)
 {
-	FILE *fp;
-	fopen_s(&fp, path, "rb");
+	FILE *fp = fopen(path, "rb");
 	fseek(fp, 0, SEEK_END);
 	auto size = ftell(fp);
 	char *temp = new char[size + 1];
@@ -21,7 +20,7 @@ char* read_file(const char *path)
 
 ////////////////////////////////////////////////////////////////
 converdi::CJobDatabase db;
-converdi::CJobDatabase& converdi::CJobDatabase::getInstance()
+converdi::CJobDatabase &converdi::CJobDatabase::getInstance()
 {
 	return db;
 }
@@ -30,14 +29,14 @@ converdi::CJobDatabase& converdi::CJobDatabase::getInstance()
 int handle_any_existing_output_file(const char *output_file)
 {
 	// Verify output file does not exist
-	FILE *fp;
-	if (!fopen_s(&fp, output_file, "rb"))
+	FILE *fp = fopen(output_file, "rb");
+	if (fp)
 	{
 		printf("This is Converdi.\n");
 		printf("Output file '%s' already exists. Overwrite? [Y/N]\n", output_file);
 		fclose(fp);
 
-		auto c = _getch();
+		auto c = getchar();
 		if (!(c == 'Y' || c == 'y'))
 		{
 			printf("No output written.\n");
@@ -49,7 +48,7 @@ int handle_any_existing_output_file(const char *output_file)
 }
 
 ////////////////////////////////////////////////////////////////
-int main(int argc, const char* argv[])
+int main(int argc, const char *argv[])
 {
 	if (argc < 3)
 	{

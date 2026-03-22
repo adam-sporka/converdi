@@ -274,7 +274,7 @@ void CSibeliusDataParser::guessRatioFromString(const char *txt, int &num, int &d
 	}
 
 	char* tmp = new char[strlen(txt) + 1];
-	strcpy_s(tmp, strlen(txt) + 1, txt);
+	std::strncpy(tmp, txt, strlen(txt) + 1);
 	tmp[slash - txt] = 0;
 
 	num = atoi(tmp);

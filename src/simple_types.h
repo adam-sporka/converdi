@@ -11,7 +11,7 @@ struct TIMELINE_POS
 
 	const char* format(char *s, int length)
 	{
-		sprintf_s(s, length, "%d:%d", m_Measure, m_TicksInMeasure);
+		snprintf(s, length, "%d:%d", m_Measure, m_TicksInMeasure);
 		return s;
 	}
 
