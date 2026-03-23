@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+#ifdef _WIN32
+    #include <conio.h>
+#endif
 #include "converdi.h"
 
 ////////////////////////////////////////////////////////////////
@@ -36,7 +38,11 @@ int handle_any_existing_output_file(const char *output_file)
 		printf("Output file '%s' already exists. Overwrite? [Y/N]\n", output_file);
 		fclose(fp);
 
-		auto c = getchar();
+		#ifdef _WIN32
+			auto c = _getch();
+		#else
+			auto c = getchar();
+		#endif
 		if (!(c == 'Y' || c == 'y'))
 		{
 			printf("No output written.\n");
