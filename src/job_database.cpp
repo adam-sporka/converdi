@@ -322,8 +322,7 @@ CDynamicsTable* CJobDatabase::parseDynTable(CTokenizer &tokenizer)
 ////////////////////////////////////////////////////////////////
 bool CJobDatabase::attemptParsingFile(std::string path)
 {
-	FILE *fp;
-	fopen_s(&fp, path.c_str(), "rb");
+	FILE *fp = fopen(path.c_str(), "rb");
 	fseek(fp, 0, SEEK_END);
 	auto size = ftell(fp);
 	char *temp = new char[size + 1];

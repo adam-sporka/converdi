@@ -153,14 +153,14 @@ void NOTATION_OBJECT::debugDump(std::string indent)
 	if (m_nSlurObjID > 0)
 	{
 		char temp[16];
-		sprintf_s(temp, 16, " Slur ID = %d", m_nSlurObjID);
+		snprintf(temp, 16, " Slur ID = %d", m_nSlurObjID);
 		custom += temp;
 	}
 
 	if (m_nTrillObjID > 0)
 	{
 		char temp[16];
-		sprintf_s(temp, 16, " Trill ID = %d", m_nTrillObjID);
+		snprintf(temp, 16, " Trill ID = %d", m_nTrillObjID);
 		custom += temp;
 	}
 
