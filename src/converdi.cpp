@@ -76,7 +76,13 @@ int main(int argc, const char *argv[])
 	}
 
 	printf("Fetching preset database\n");
-	if (!db.readDataFromDirectory(".", ""))
+	if (!db.readDataFromDirectory("./data/presets", ""))
+	{
+		printf("Can't proceed. Please fix issues and try again.\n");
+		return 1;
+	}
+	printf("Fetching profile database\n");
+	if (!db.readDataFromDirectory("./data/profiles", ""))
 	{
 		printf("Can't proceed. Please fix issues and try again.\n");
 		return 1;
